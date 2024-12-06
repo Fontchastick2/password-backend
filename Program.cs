@@ -9,7 +9,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
     {
-        policy.WithOrigins("http://localhost:4200") // Angular app's URL
+        policy.WithOrigins("http://localhost:4200")
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
@@ -31,9 +31,9 @@ void SaveToFile() => File.WriteAllText(filePath, JsonSerializer.Serialize(passwo
 
 app.MapPost("/api/passwords", (PasswordItem item) =>
 {
-    item.Id = passwordStore.Count > 0 ? passwordStore[^1].Id + 1 : 1; // Assign new ID
-    item.password = Convert.ToBase64String(Encoding.ASCII.GetBytes(item.password)); // Encrypt the password
-    passwordStore.Add(item);
+    item.Id = passwordStore.Count > 0 ? passwordStore.Max(p => p.Id) + 1 : 1;
+    item.password = Convert.ToBase64String(Encoding.ASCII.GetBytes(item.password));
+    passwordStore.Insert(0, item);
     SaveToFile();
     return Results.Ok(item);
 });
@@ -95,7 +95,23 @@ app.MapDelete("/api/passwords/{id:int}", (int id) =>
     return Results.Ok($"Password with ID {id} deleted.");
 });
 
+app.MapPost("/api/passwords/verify", (InputModel input) =>
+{
+    const string expectedValue = "jean@groupm";
+    if (input.Value == expectedValue)
+    {
+        return Results.Ok(new { message = "Input matches the expected value." });
+    }
+    return Results.BadRequest(new { message = "Input does not match the expected value." });
+});
+
 app.Run();
+
+
+record InputModel
+{
+    public string Value { get; set; }
+}
 
 record PasswordItem
 {
