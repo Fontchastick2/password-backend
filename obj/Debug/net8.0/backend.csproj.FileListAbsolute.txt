@@ -31,4 +31,5 @@ D:\Users\jeanf\Boulot\backend\obj\Debug\net8.0\refint\backend.dll
 D:\Users\jeanf\Boulot\backend\obj\Debug\net8.0\backend.pdb
 D:\Users\jeanf\Boulot\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 D:\Users\jeanf\Boulot\backend\obj\Debug\net8.0\ref\backend.dll
-D:\Users\jeanf\Boulot\backend\bin\Debug\net8.0\passwordStore.json
+D:\Users\jeanf\Boulot\backend\obj\Debug\net8.0\backend.sourcelink.json
+D:\Users\jeanf\Boulot\backend\bin\Debug\net8.0\Properties\passwordStore.json
